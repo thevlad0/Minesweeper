@@ -5,36 +5,6 @@
 #include <cstdlib>
 #include <ctime>
 
-void displayUnderMines()
-{
-	cout << underMines;
-}
-
-void displayOverMines()
-{
-	cout << overMines;
-}
-
-void displayNegativeSize()
-{
-	cout << negativeSize;
-}
-
-void displayInvalidSize()
-{
-	cout << invalidSize;
-}
-
-void displayUnknownCommand()
-{
-	cout << unknownCommand;
-}
-
-void displayInvalidCoordinates()
-{
-	cout << invalidCoordinates;
-}
-
 bool validMines(int input, size_t matrixSize)
 {
 	if(input < 1 || input > (3 * matrixSize))
@@ -176,7 +146,7 @@ void initializeGame(size_t matrixSize, unsigned mines)
 	}
 }
 
-bool doCommand(char* command, unsigned x, unsigned y)
+bool doCommand(char* command, unsigned x, unsigned y, unsigned &foundMines)
 {
 	//Determines whether the cell has undergone a valid command
 	bool hasChanged = false;
@@ -186,6 +156,9 @@ bool doCommand(char* command, unsigned x, unsigned y)
 		hasChanged = true;
 	}
 	if(command == mark) {
+		if(matrix[x][y] == 9)
+			foundMines++;
+
 		matrix[x][y] += 10;
 		hasChanged = true;
 	}
@@ -194,6 +167,8 @@ bool doCommand(char* command, unsigned x, unsigned y)
 			return false;
 		else {
 			matrix[x][y] -= 10;
+			if(matrix[x][y] == 9)
+				foundMines--;
 			hasChanged = true;
 		}
 	}	
@@ -204,9 +179,9 @@ bool doCommand(char* command, unsigned x, unsigned y)
 	return false;
 }
 
-bool printMatrix(size_t matrixSize)
+bool printMatrix(size_t matrixSize, unsigned mines, unsigned foundMines)
 {
-	bool mineFound = false, gameOver = true;
+	bool mineFound = false;
 
 	cout << '\t';
 	for (size_t i = 0; i < matrixSize; i++)
@@ -237,20 +212,24 @@ bool printMatrix(size_t matrixSize)
 			//It was previously marked
 			if(matrix[i][j] > 10) {
 				cout << 'x' << '\t';
-				gameOver = false; //There is atleast one unopened cell
 			}
 			else {
 				cout << 'o' << '\t';
-				gameOver = false; //There is atleast one unopened cell
 			}
 		}
 		cout << endl << " \t |";
 	}
 
 	//There are still cells to open and no mine was found
-	if(!gameOver && !mineFound)
+	if(!mineFound) {
+		cout << exploded;
 		return true;
-	
-	//The game has ended
+	}
+
+	if(foundMines == mines) {
+		cout << win;
+		return true;
+	}
+
 	return false;
 }

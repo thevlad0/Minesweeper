@@ -46,14 +46,6 @@ const char mark[] = "mark";
 const char unmark[] = "unmark";
 const char open[] = "open";
 
-//Commands for displaying error messages:
-void displayOverMines();
-void displayUnderMines();
-void displayInvalidSize();
-void displayNegativeSize();
-void displayUnknownCommand();
-void displayInvalidCoordinates();
-
 //Checks if the number of mines entered is valid
 bool validMines(int input, size_t matrixSize);
 
@@ -69,11 +61,8 @@ unsigned getRand(size_t matrixSize);
 //Initializes the mines on the field
 void initializeGame(size_t size, unsigned mines);
 
-//Splits up the command and cordinates of the cell from the user input
-void stringSplit(char* userInput);
-
 //Checks and completes whichever command has been called
-bool doCommand(char* command, unsigned x, unsigned y);
+bool doCommand(char* command, unsigned x, unsigned y, unsigned &foundMines);
 
 //Prints out the current state of the playfield and determines whether the game is over
-bool printMatrix(size_t size);
+bool printMatrix(size_t size, unsigned mines, unsigned foundMines);
