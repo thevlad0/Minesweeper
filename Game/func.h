@@ -66,10 +66,10 @@ void initializeGame(size_t size, unsigned mines);
 void stringSplit(char* userInput);
 
 //Checks and completes whichever command has been called
-void doCommand(unsigned cell, char* command);
+errorMessage doCommand(char* command, unsigned x, unsigned y);
 
 //Gets the length of a string
 size_t getLen(const char* str);
 
 //Prints out the current state of the playfield and determines whether the game is over
-void printMatrix(size_t size, bool &gameOver);
+bool printMatrix(size_t size);

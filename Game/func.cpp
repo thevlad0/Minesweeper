@@ -170,11 +170,27 @@ void initializeGame(size_t matrixSize, unsigned mines)
 	}
 }
 
-void printMatrix(size_t matrixSize, bool &gameOver)
+errorMessage doCommand(char* command, unsigned x, unsigned y)
 {
+	if(command == open)
+		matrix[x][y] += 20;
+	if(command == mark)
+		matrix[x][y] += 10;
+	if(command == unmark) {
+		if(matrix[x][y] < 10)
+			return displayUnknownCommand;
+		else
+			matrix[x][y] -= 10;
+	}	
+}
+
+bool printMatrix(size_t matrixSize)
+{
+	bool mineFound = false, gameOver = true;
+
 	cout << '\t';
 	for (size_t i = 0; i < matrixSize; i++)
-		cout << i << '\t';
+		cout << '\t' << i << '\t';
 
 	cout << endl << '\t';
 	
@@ -183,19 +199,38 @@ void printMatrix(size_t matrixSize, bool &gameOver)
 
 	for (size_t i = 0; i < matrixSize; i++)
 	{
-		cout << i << "\t |";
+		cout << endl << i << "\t |";
 		for (size_t j = 0; j < matrixSize; j++)
 		{
 			//Opened a mine
-			if(matrix[i][j] == 22) {
+			if(matrix[i][j] == 29) {
 				cout << '*' << '\t';
-				gameOver = true;
+				mineFound = true;
+				continue;
 			}
+
+			//It was previously opened
+			if(matrix[i][j] > 20) {
+				cout << matrix[i][j];
+			}
+
 			//It was previously marked
-			if(matrix[i][j] > 10)
+			if(matrix[i][j] > 10) {
 				cout << 'x' << '\t';
-			else
+				gameOver = false; //There is atleast one unopened cell
+			}
+			else {
 				cout << 'o' << '\t';
+				gameOver = false; //There is atleast one unopened cell
+			}
 		}
+		cout << endl << " \t |";
 	}
+
+	//There are still cells to open and no mine was found
+	if(!gameOver && !mineFound)
+		return true;
+	
+	//The game has ended
+	return false;
 }
