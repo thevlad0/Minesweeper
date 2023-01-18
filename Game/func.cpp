@@ -87,12 +87,20 @@ void initializeGame(size_t matrixSize, unsigned mines)
 	{
 		for (size_t j = 0; j < matrixSize; j++)
 		{
-			if(true)
-			{
-
-			}
-
 			if(matrix[i][j] == 9) {
+				if(!i && !j) {
+					matrix[i + 1][j]++;
+					matrix[i][j + 1]++;
+					continue;
+				}
+
+				if(i == matrixSize - 1 || j == matrixSize - 1) {
+					if(i == matrixSize - 1) {
+						matrix[i - 1][j]++;
+						matrix[i][j + 1]++;
+					}
+				}
+
 				if(i + 1 > 2 && j + 1 > 2) {
 					for (size_t s = j - 1; s < j + 1; s++) 
 					{
