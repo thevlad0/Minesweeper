@@ -6,6 +6,9 @@ unsigned matrix[10][10] = { 0 };
 //The max symbol length of a command
 const unsigned MAX_COMMAND_LEN = 10;
 
+using namespace std;
+using errorMessage = void(*);
+
 //In-game messages:
 const char welcome[] = "Hello and welcome to Minesweeper! First let's give you some info:\n"
 					   "\nIn this game you will be given the opportunity to choose your matrix\n"
@@ -21,7 +24,7 @@ const char goodLuck[] = "OK! We're all set to go! Good luck and have fun!";
 const char gamePlay[] = "Please type in your command: ";
 
 //Error messages:
-const char unknown_command[] = "Oops, seems like I ran into a problem completing your request."
+const char unknownCommand[] = "Oops, seems like I ran into a problem completing your request."
 							   "\nPlease check your input and try again:\n";
 const char invalidSize[] = "Ooops, forgot to mention, the field can only go up to 10 and cannot be below 3 :)"
 						   "\nNow that you know that, try again: ";
@@ -32,19 +35,26 @@ const char underMines[] = "Ooops, the game won't be any fun if there are no mine
 const char negativeSize[] = "Have you ever heard of a square with a negative side "
 							"length?\nWell neither have I, so let's try again: ";
 
-//Commands:
+//In-game commands:
 const char mark[] = "mark";
 const char unmark[] = "unmark";
 const char open[] = "open";
 
+//Commands for displaying error messages:
+void displayOverMines();
+void displayUnderMines();
+void displayInvalidSize();
+void displayNegativeSize();
+void displayUnknownCommand();
+
 //Checks if the number of mines entered is valid
-bool validMines(int input, size_t matrixSize);
+errorMessage validMines(int input, size_t matrixSize);
 
 //Checks if the matrix size is valid
-bool validMatrix(int matrixSize);
+errorMessage validMatrix(int matrixSize);
 
 //Checks if the command the user wants to do is possible
-bool validCommand(char* userInput);
+errorMessage validCommand(const char* userInput);
 
 //Returns a random integer in a specified range
 unsigned getRand(size_t matrixSize);
@@ -57,6 +67,17 @@ void stringSplit(char* userInput);
 
 //Checks and completes whichever command has been called
 void doCommand(unsigned cell, char* command);
+
+//Gets the length of a string
+size_t getLen(const char* str)
+{
+	size_t index = 0;
+
+	while(str[index] != '\0')
+		index++;
+
+	return index;
+}
 
 //Prints a seperation line with a specified lenght
 //vert determines whether the line will be vertical or horizontal
