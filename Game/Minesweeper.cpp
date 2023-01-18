@@ -28,18 +28,21 @@ int main()
     
     cout << goodLuck;
     unsigned foundMines = 0;
-    do
-    {
+    initializeGame(matrixSize, mines);
+    do {
         cout << gamePlay;
 
         char command[5];
         unsigned x, y;
         cin >> command >> x >> y;
-        if(!doCommand) {
+        if(!validCoordinate(x) || !validCoordinate(y)) {
+            cout << invalidCoordinates;
+            continue;
+        }
+        if(!doCommand(command, x, y, foundMines)) {
             cout << unknownCommand;
             continue;
         }
 
     } while (printMatrix(matrixSize, mines, foundMines));
-    
 }
