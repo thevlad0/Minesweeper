@@ -7,7 +7,6 @@ unsigned matrix[10][10] = { 0 };
 const unsigned MAX_COMMAND_LEN = 10;
 
 using namespace std;
-using errorMessage = void(*);
 
 //In-game messages:
 const char welcome[] = "Hello and welcome to Minesweeper! First let's give you some info:\n"
@@ -29,17 +28,17 @@ const char win[] = "Wow, wow, wow, looks like you actually managed to beat the g
 
 //Error messages:
 const char unknownCommand[] = "Oops, seems like I ran into a problem completing your request."
-							   "\nPlease check your input and try again:\n";
+							   "\nPlease check your input and try again.\n";
 const char invalidSize[] = "Ooops, forgot to mention, the field can only go up to 10 and cannot be below 3 :)"
-						   "\nNow that you know that, try again: ";
+						   "\nNow that you know that, try again.\n";
 const char overMines[] = "Ooops, seems you're trying put too many mines on the field.\n"
-						 "Let's try this once again: ";
+						 "Let's try this once again.\n";
 const char underMines[] = "Ooops, the game won't be any fun if there are no mines\n"
-						  "Please try once more: ";
+						  "Please try once more.\n";
 const char negativeSize[] = "Have you ever heard of a square with a negative side "
-							"length?\nWell neither have I, so let's try again: ";
+							"length?\nWell neither have I, so let's try again!\n";
 const char invalidCoordinates[] = "Don't try to access the infinite darkness of the console.\n"
-								  "You don't know what's hiding there :)))\n Let's try again: ";
+								  "You don't know what's hiding there :)))\n Let's try again!\n";
 
 //In-game commands:
 const char mark[] = "mark";
