@@ -29,16 +29,6 @@ bool validCoordinate(unsigned coordinate, size_t matrixSize)
 	return true;
 }
 
-size_t getLen(const char* str)
-{
-	size_t index = 0;
-
-	while(str[index] != '\0')
-		index++;
-
-	return index;
-}
-
 unsigned getRand(size_t matrixSize)
 {
 	srand(time(0));
@@ -206,7 +196,10 @@ bool printMatrix(size_t matrixSize, unsigned mines, unsigned foundMines)
 
 			//It was previously opened
 			if(matrix[i][j] > 20) {
-				cout << matrix[i][j];
+				if(matrix[i][j] - 20 == 0)
+					cout << ' ';
+				else
+					cout << matrix[i][j] - 20;
 			}
 
 			//It was previously marked
