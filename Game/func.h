@@ -22,6 +22,10 @@ const char sizeOfMatrix[] = "\nPlease choose the size of your field: ";
 const char numberOfMines[] = "Please choose the number of mines you want to be hidden: ";
 const char goodLuck[] = "OK! We're all set to go! Good luck and have fun!";
 const char gamePlay[] = "Please type in your command: ";
+const char exploded[] = "Oops, looks like you exploded and now the game is over :(\n"
+						"Please exit the game and open it again to restart";
+const char win[] = "Wow, wow, wow, looks like you actually managed to beat the game!\n"
+				   "The odds were stacked against you but you really pushed through. Congratulations :)";
 
 //Error messages:
 const char unknownCommand[] = "Oops, seems like I ran into a problem completing your request."
@@ -34,6 +38,8 @@ const char underMines[] = "Ooops, the game won't be any fun if there are no mine
 						  "Please try once more: ";
 const char negativeSize[] = "Have you ever heard of a square with a negative side "
 							"length?\nWell neither have I, so let's try again: ";
+const char invalidCoordinates[] = "Don't try to access the infinite darkness of the console.\n"
+								  "You don't know what's hiding there :)))\n Let's try again: ";
 
 //In-game commands:
 const char mark[] = "mark";
@@ -46,15 +52,16 @@ void displayUnderMines();
 void displayInvalidSize();
 void displayNegativeSize();
 void displayUnknownCommand();
+void displayInvalidCoordinates();
 
 //Checks if the number of mines entered is valid
-errorMessage validMines(int input, size_t matrixSize);
+bool validMines(int input, size_t matrixSize);
 
 //Checks if the matrix size is valid
-errorMessage validMatrix(int matrixSize);
+bool validMatrix(int matrixSize);
 
-//Checks if the command the user wants to do is possible
-errorMessage validCommand(const char* userInput);
+//Checks if the coordinate entered is within the matrix
+bool validCoordinate(unsigned coordinate);
 
 //Returns a random integer in a specified range
 unsigned getRand(size_t matrixSize);
@@ -66,10 +73,7 @@ void initializeGame(size_t size, unsigned mines);
 void stringSplit(char* userInput);
 
 //Checks and completes whichever command has been called
-errorMessage doCommand(char* command, unsigned x, unsigned y);
-
-//Gets the length of a string
-size_t getLen(const char* str);
+bool doCommand(char* command, unsigned x, unsigned y);
 
 //Prints out the current state of the playfield and determines whether the game is over
 bool printMatrix(size_t size);
