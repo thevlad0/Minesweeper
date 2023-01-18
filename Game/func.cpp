@@ -30,27 +30,33 @@ void displayUnknownCommand()
 	cout << unknownCommand;
 }
 
-errorMessage validMines(int input, size_t matrixSize)
+void displayInvalidCoordinates()
 {
-	if (input < 1)
-		return displayUnderMines;
-	if(input > (3 * matrixSize))
-		return displayOverMines;
+	cout << invalidCoordinates;
 }
 
-errorMessage validMatrix(int matrixSize)
+bool validMines(int input, size_t matrixSize)
 {
-	if(matrixSize < 0)
-		return displayNegativeSize;
+	if(input < 1 || input > (3 * matrixSize))
+		return false;
+
+	return true;
+}
+
+bool validMatrix(int matrixSize)
+{
 	if (matrixSize < 3 || matrixSize > 10)
-		return displayInvalidSize;
+		return false;
+
+	return true;
 }
 
-errorMessage validCommand(const char* command, unsigned x, unsigned y, size_t commandLen)
+bool validCoordinate(unsigned coordinate, size_t matrixSize) 
 {
-	if(commandLen > 10)
-		return displayUnknownCommand;
+	if(coordinate > matrixSize - 1)
+		return false;
 	
+	return true;
 }
 
 size_t getLen(const char* str)
@@ -170,18 +176,32 @@ void initializeGame(size_t matrixSize, unsigned mines)
 	}
 }
 
-errorMessage doCommand(char* command, unsigned x, unsigned y)
+bool doCommand(char* command, unsigned x, unsigned y)
 {
-	if(command == open)
+	//Determines whether the cell has undergone a valid command
+	bool hasChanged = false;
+
+	if(command == open) {
 		matrix[x][y] += 20;
-	if(command == mark)
+		hasChanged = true;
+	}
+	if(command == mark) {
 		matrix[x][y] += 10;
+		hasChanged = true;
+	}
 	if(command == unmark) {
 		if(matrix[x][y] < 10)
-			return displayUnknownCommand;
-		else
+			return false;
+		else {
 			matrix[x][y] -= 10;
+			hasChanged = true;
+		}
 	}	
+
+	if(!hasChanged)
+		return true;
+	
+	return false;
 }
 
 bool printMatrix(size_t matrixSize)
