@@ -15,7 +15,7 @@ const char welcome[] = "Hello and welcome to Minesweeper! First let's give you s
 					   "size and the number of mines in the game. To give a command type in:\n"
 					   "	   [command] [coordinate x] [coordinate y]\n\nRemember that x and y correspond to the row"
 					   " and column of each cell on \nthe field and the only commands available are: open, mark and unmark.\n"
-					   "\nAlso you should keep in mind the following: '.' means the cell is unmarked,\n'x' means the cell"
+					   "\nAlso you should keep in mind the following: 'o' means the cell is unmarked,\n'x' means the cell"
 					   " has been marked\nand '*' means you've found a bomb."
 					   "\n\nSo what are you waiting for, let's start already ;)\n";
 const char sizeOfMatrix[] = "\nPlease choose the size of your field: ";
@@ -69,22 +69,7 @@ void stringSplit(char* userInput);
 void doCommand(unsigned cell, char* command);
 
 //Gets the length of a string
-size_t getLen(const char* str)
-{
-	size_t index = 0;
-
-	while(str[index] != '\0')
-		index++;
-
-	return index;
-}
-
-//Prints a seperation line with a specified lenght
-//vert determines whether the line will be vertical or horizontal
-void printLine(size_t lenght, bool vert);
-
-//Prints the outer part of the playfield
-void printOuter(size_t matrixSize);
+size_t getLen(const char* str);
 
 //Prints out the current state of the playfield and determines whether the game is over
 void printMatrix(size_t size, bool &gameOver);

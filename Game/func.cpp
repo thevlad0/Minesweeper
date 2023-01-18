@@ -88,24 +88,77 @@ void initializeGame(size_t matrixSize, unsigned mines)
 		for (size_t j = 0; j < matrixSize; j++)
 		{
 			if(matrix[i][j] == 9) {
+				
+				//Left upper corner
 				if(!i && !j) {
 					matrix[i + 1][j]++;
 					matrix[i][j + 1]++;
 					continue;
 				}
 
-				if(i == matrixSize - 1 || j == matrixSize - 1) {
-					if(i == matrixSize - 1) {
+				//Left upper corner
+				if(!i && j == matrixSize - 1) {
 						matrix[i - 1][j]++;
-						matrix[i][j + 1]++;
-					}
+						matrix[i][j - 1]++;
+						continue;
 				}
 
+				//Right lower corner
+				if(i == matrixSize - 1 && !j) {
+					matrix[i - 1][j]++;
+					matrix[i][j + 1]++;
+					continue;
+				}
+
+				//Right lower corner
+				if(i == matrixSize - 1 && j == matrixSize - 1) {
+						matrix[i - 1][j]++;
+						matrix[i][j - 1]++;
+						continue;
+				}
+
+				//Upper contour
+				if(!i) {
+					matrix[i][j - 1]++;
+					matrix[i][j + 1]++;
+					for (size_t s = j - 1; s < j + 1; s++)
+						matrix[i + 1][s]++;
+					continue;
+				}
+
+				//Lower contour
+				if(i == matrixSize - 1) {
+					matrix[i][j - 1]++;
+					matrix[i][j + 1]++;
+					for (size_t s = j - 1; s < j + 1; s++)
+						matrix[i - 1][s]++;
+					continue;
+				}
+
+				//Left contour
+				if(j == matrixSize - 1) {
+					matrix[i - 1][j]++;
+					matrix[i + 1][j]++;
+					for (size_t s = i - 1; s < i + 1; s++)
+						matrix[s][j + 1]++;
+					continue;
+				}
+
+				//Right contour
+				if(!j) {
+					matrix[i - 1][j]++;
+					matrix[i + 1][j]++;
+					for (size_t s = i - 1; s < i + 1; s++)
+						matrix[s][j - 1]++;
+					continue;
+				}
+
+				//Any center
 				if(i + 1 > 2 && j + 1 > 2) {
 					for (size_t s = j - 1; s < j + 1; s++) 
 					{
-						matrix[i - 1][j]++;
-						matrix[i + 1][j]++;
+						matrix[i - 1][s]++;
+						matrix[i + 1][s]++;
 					}
 					matrix[i][j - 1]++;
 					matrix[i][j + 1]++;
@@ -115,11 +168,34 @@ void initializeGame(size_t matrixSize, unsigned mines)
 		}
 		
 	}
-	
-	
 }
 
 void printMatrix(size_t matrixSize, bool &gameOver)
 {
+	cout << '\t';
+	for (size_t i = 0; i < matrixSize; i++)
+		cout << i << '\t';
 
+	cout << endl << '\t';
+	
+	for (size_t i = 0; i < 3*matrixSize; i++)
+		cout << '_';
+
+	for (size_t i = 0; i < matrixSize; i++)
+	{
+		cout << i << "\t |";
+		for (size_t j = 0; j < matrixSize; j++)
+		{
+			//Opened a mine
+			if(matrix[i][j] == 22) {
+				cout << '*' << '\t';
+				gameOver = true;
+			}
+			//It was previously marked
+			if(matrix[i][j] > 10)
+				cout << 'x' << '\t';
+			else
+				cout << 'o' << '\t';
+		}
+	}
 }
