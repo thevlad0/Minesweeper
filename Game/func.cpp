@@ -149,7 +149,7 @@ void initializeGame(size_t matrixSize, unsigned mines)
 				}
 
 				//Left contour
-				if (j == matrixSize - 1) {
+				if (!j) {
 					if (matrix[i - 1][j] != 9)
 						matrix[i - 1][j]++;
 					if(matrix[i + 1][j] != 9)
@@ -163,7 +163,7 @@ void initializeGame(size_t matrixSize, unsigned mines)
 				}
 
 				//Right contour
-				if (!j) {
+				if (j == matrixSize - 1) {
 					if (matrix[i - 1][j] != 9)
 						matrix[i - 1][j]++;
 					if (matrix[i + 1][j] != 9)
@@ -250,8 +250,20 @@ bool doCommand(char* command, unsigned x, unsigned y, size_t matrixSize, unsigne
 			return false;
 		if (matrix[x][y] > 10) //Previously marked
 			matrix[x][y] += 10;
-		else
+		else {
 			matrix[x][y] += 20;
+			if (matrix[x][y] == 29) {
+				for (size_t i = 0; i < matrixSize; i++)
+				{
+					for (size_t j = 0; j < matrixSize; j++)
+					{
+						if (matrix[i][j] == 9)
+							matrix[i][j] += 20;
+					}
+				}
+			}
+		}
+			
 
 		if (matrix[x][y] == 20) {
 			matrix[x][y] -= 20;
@@ -328,7 +340,7 @@ bool printMatrix(size_t matrixSize, unsigned mines, unsigned foundMines, unsigne
 				cout << 'x' << "  ";
 			}
 			else {
-				cout << 'o' << "  ";
+				cout << '.' << "  ";
 			}
 		}
 		if(i != matrixSize - 1)

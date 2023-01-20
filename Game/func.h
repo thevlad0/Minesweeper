@@ -14,7 +14,7 @@ const char welcome[] = "Hello and welcome to Minesweeper! First let's give you s
 					   "size and the number of mines in the game. To give a command type in:\n"
 					   "	   [command] [coordinate x] [coordinate y]\n\nRemember that x and y correspond to the row"
 					   " and column of each cell on \nthe field and the only commands available are: open, mark and unmark.\n"
-					   "\nAlso you should keep in mind the following: 'o' means the cell is unmarked,\n'x' means the cell"
+					   "\nAlso you should keep in mind the following: '.' means the cell is unmarked,\n'x' means the cell"
 					   " has been marked and '*' means you've found a bomb."
 					   "\n\nSo what are you waiting for, let's start already ;)\n";
 const char sizeOfMatrix[] = "\nPlease choose the size of your field: ";
