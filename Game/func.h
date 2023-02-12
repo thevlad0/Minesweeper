@@ -67,7 +67,7 @@ bool validMines(int input, size_t matrixSize);
 bool validMatrix(int matrixSize);
 
 //Checks if the coordinate entered is within the matrix
-bool validCoordinate(unsigned coordinate, size_t matrixSize);
+bool validCoordinate(int coordinate, size_t matrixSize);
 
 //Compares two strings
 bool strCompare(const char* str1, const char* str2);
@@ -78,7 +78,7 @@ unsigned getRand(size_t matrixSize);
 //Initializes the mines on the field
 void initializeGame(size_t size, unsigned mines);
 
-void zeroFound(unsigned x, unsigned y, size_t matrixSize);
+void zeroFound(int x, int y, size_t matrixSize);
 
 //Checks and completes whichever command has been called
 bool doCommand(char* command, unsigned x, unsigned y, size_t matrixSize, unsigned& foundMines, unsigned& marked);

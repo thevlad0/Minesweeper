@@ -36,9 +36,11 @@ bool validMatrix(int matrixSize)
 	return true;
 }
 
-bool validCoordinate(unsigned coordinate, size_t matrixSize)
+bool validCoordinate(int coordinate, size_t matrixSize)
 {
 	if (coordinate > matrixSize - 1)
+		return false;
+	if (coordinate < 0)
 		return false;
 
 	return true;
@@ -64,131 +66,21 @@ void initializeGame(size_t matrixSize, unsigned mines)
 			i--;
 	}
 
-	for (size_t i = 0; i < matrixSize; i++)
+	for (int i = 0; i < matrixSize; i++)
 	{
-		for (size_t j = 0; j < matrixSize; j++)
+		for (int j = 0; j < matrixSize; j++)
 		{
 			if (matrix[i][j] == 9) {
 
-				//Any center
-				if ((i + 1 >= 2 && j + 1 >= 2) && (i - 1 < matrixSize - 1 && j - 1 <= matrixSize - 1)) {
-					for (size_t s = j - 1; s <= j + 1; s++)
+				for (int k = i - 1; k <= i + 1; k++)
+				{
+					for (int s = j - 1; s <= j + 1; s++)
 					{
-						if (matrix[i - 1][s] != 9)
-							matrix[i - 1][s]++;
-						if (matrix[i + 1][s] != 9)
-							matrix[i + 1][s]++;
+						if (validCoordinate(k, matrixSize) && validCoordinate(s, matrixSize)) {
+							if(matrix[k][s] != 9)
+								matrix[k][s]++;
+						}
 					}
-					if (matrix[i][j - 1] != 9)
-						matrix[i][j - 1]++;
-					if (matrix[i][j + 1] != 9)
-						matrix[i][j + 1]++;
-
-					continue;
-				}
-
-				//Left upper corner
-				if (!i && !j) {
-					if (matrix[i + 1][j] != 9)
-						matrix[i + 1][j]++;
-					if (matrix[i][j + 1] != 9)
-						matrix[i][j + 1]++;
-					if (matrix[i + 1][j + 1] != 9)
-						matrix[i + 1][j + 1]++;
-
-					continue;
-				}
-
-				//Right upper corner
-				if (!i && j == matrixSize - 1) {
-					if (matrix[i + 1][j] != 9)
-						matrix[i + 1][j]++;
-					if (matrix[i][j - 1] != 9)
-						matrix[i][j - 1]++;
-					if (matrix[i + 1][j - 1] != 9)
-						matrix[i + 1][j - 1]++;
-					
-					continue;
-				}
-
-				//Left lower corner
-				if (i == matrixSize - 1 && !j) {
-					if (matrix[i - 1][j] != 9)
-						matrix[i - 1][j]++;
-					if (matrix[i][j + 1] != 9)
-						matrix[i][j + 1]++;
-					if (matrix[i - 1][j + 1] != 9)
-						matrix[i - 1][j + 1]++;
-					
-					continue;
-				}
-
-				//Right lower corner
-				if (i == matrixSize - 1 && j == matrixSize - 1) {
-					if(matrix[i - 1][j] != 9)
-						matrix[i - 1][j]++;
-					if (matrix[i][j - 1] != 9)
-						matrix[i][j - 1]++;
-					if (matrix[i - 1][j - 1] != 9)
-						matrix[i - 1][j - 1]++;
-
-					continue;
-				}
-
-				//Upper contour
-				if (!i) {
-					if(matrix[i][j - 1] != 9)
-						matrix[i][j - 1]++;
-					if (matrix[i][j + 1] != 9)
-						matrix[i][j + 1]++;
-					for (size_t s = j - 1; s <= j + 1; s++) {
-						if (matrix[i + 1][s] != 9)
-							matrix[i + 1][s]++;
-					}
-
-					continue;
-				}
-
-				//Lower contour
-				if (i == matrixSize - 1) {
-					if (matrix[i][j - 1] != 9)
-						matrix[i][j - 1]++;
-					if (matrix[i][j + 1] != 9)
-						matrix[i][j + 1]++;
-					for (size_t s = j - 1; s <= j + 1; s++) {
-						if (matrix[i - 1][s] != 9)
-							matrix[i - 1][s]++;
-					}
-
-					continue;
-				}
-
-				//Left contour
-				if (!j) {
-					if (matrix[i - 1][j] != 9)
-						matrix[i - 1][j]++;
-					if(matrix[i + 1][j] != 9)
-						matrix[i + 1][j]++;
-					for (size_t s = i - 1; s <= i + 1; s++) {
-						if(matrix[s][j + 1] != 9)
-							matrix[s][j + 1]++;
-					}
-						
-					continue;
-				}
-
-				//Right contour
-				if (j == matrixSize - 1) {
-					if (matrix[i - 1][j] != 9)
-						matrix[i - 1][j]++;
-					if (matrix[i + 1][j] != 9)
-						matrix[i + 1][j]++;
-					for (size_t s = i - 1; s <= i + 1; s++) {
-						if (matrix[s][j - 1] != 9)
-							matrix[s][j - 1]++;
-					}
-
-					continue;
 				}
 			}
 		}
@@ -213,7 +105,7 @@ bool strCompare(const char* str1, const char* str2)
 	return true;
 }
 
-void zeroFound(unsigned x, unsigned y, size_t matrixSize)
+void zeroFound(int x, int y, size_t matrixSize)
 {
 	matrix[x][y] += 20;
 
@@ -274,6 +166,8 @@ bool doCommand(char* command, unsigned x, unsigned y, size_t matrixSize, unsigne
 					{
 						if (matrix[i][j] == 9)
 							matrix[i][j] += 20;
+						if (matrix[i][j] == 19)
+							matrix[i][j] += 10;
 					}
 				}
 			}
