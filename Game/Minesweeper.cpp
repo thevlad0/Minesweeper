@@ -1,18 +1,3 @@
-/**
-*  
-* Solution to course project # 7
-* Introduction to programming course
-* Faculty of Mathematics and Informatics of Sofia University
-* Winter semester 2022/2023
-*
-* @author Vladimir Velikov
-* @idnumber 0MI0600204
-* @compiler VS
-*
-* <file that contains the main function>
-*
-*/
-
 #include "func.h"
 #include <iostream>
 
